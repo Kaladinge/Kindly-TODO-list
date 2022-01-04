@@ -45,11 +45,16 @@ function chooseCountry(event) {
 function addToList() {
   
   const countryList = getCountryList();
-  const realCountry = countryListArray.find((country) => country.name.common === input.value);
+  const realCountry = countryListArray.find((country) => country.name.common.toLowerCase() === input.value.toLowerCase());
   const alreadyThere = countryList.find((country) => country.name.toLowerCase() === input.value.toLowerCase());
  
   if ((realCountry) && (!alreadyThere)) {
-    const data = {name: input.value, id: Date.now(), checked: "no"};
+    const words = input.value.split(" ");
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+    const capitalLetterWords = words.join(" ");
+    const data = {name: capitalLetterWords, id: Date.now(), checked: "no"};
     countryList.push(data);
     setCountryList("countries", countryList);
     makeList(countryList, todoList);
