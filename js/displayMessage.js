@@ -1,4 +1,4 @@
-export function errorMessage(container, category, message) {
+export function displayMessage(container, category, message) {
   
   
   const messageContainer = document.querySelector(container);

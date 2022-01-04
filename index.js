@@ -1,4 +1,4 @@
-import { errorMessage } from "./js/displayErrorMessage.js";
+import { displayMessage } from "./js/displayMessage.js";
 import { countryListArray } from "./js/endpoint.js";
 import { getCountryList, setCountryList } from "./js/localStorage.js";
 import { makeList, todoList } from "./js/makeList.js";
@@ -54,13 +54,13 @@ function addToList() {
     setCountryList("countries", countryList);
     makeList(countryList, todoList);
     input.value = "";
-    errorMessage(".error-container", "success-message", "Country added successfully");
+    displayMessage(".error-container", "success-message", "Country added successfully");
   } else {
     if (!realCountry) {
-      errorMessage(".error-container", "error-message", "This value is not a country");
+      displayMessage(".error-container", "error-message", "This value is not a country");
     }
     if (alreadyThere){
-      errorMessage(".error-container", "error-message", "This country is already included");
+      displayMessage(".error-container", "error-message", "This country is already included");
     }
   }
 }
