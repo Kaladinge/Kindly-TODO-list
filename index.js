@@ -30,7 +30,6 @@ function autoComplete() {
                                       <li class="autocomplete-list__country">${country.name.common}</li>
                                     `
       }
-
     })
   }
 }
@@ -50,10 +49,12 @@ function addToList() {
  
   if ((realCountry) && (!alreadyThere)) {
     const words = input.value.split(" ");
+
     for (let i = 0; i < words.length; i++) {
       words[i] = words[i][0].toUpperCase() + words[i].substr(1);
     }
     const capitalLetterWords = words.join(" ");
+    
     const data = {name: capitalLetterWords, id: Date.now(), checked: "no"};
     countryList.push(data);
     setCountryList("countries", countryList);

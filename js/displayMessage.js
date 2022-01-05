@@ -1,6 +1,5 @@
 export function displayMessage(container, category, message) {
   
-  
   const messageContainer = document.querySelector(container);
   messageContainer.style.display = "block";
   
