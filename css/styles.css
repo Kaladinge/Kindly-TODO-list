@@ -325,4 +325,10 @@ input[type="checkbox"] {
 
 .success-message {
   background-color: green;
+  opacity: 0.7;
+}
+
+li.selected {
+  background: rgb(71, 171, 225);
+  color: white;
 }
