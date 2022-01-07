@@ -1,3 +1,4 @@
+import { arrowsUpDown } from "./js/arrowsUpDown.js";
 import { displayMessage } from "./js/displayMessage.js";
 import { countryListArray } from "./js/endpoint.js";
 import { getCountryList, setCountryList } from "./js/localStorage.js";
@@ -11,100 +12,30 @@ const countryList = getCountryList();
 
 makeList(countryList, todoList);
 
-var liSelected;
-var index = -1;
 
-document.addEventListener("keydown", function (e) {
-  if (e.code !== "Enter") {
-    console.log("hi");
-    var len = autocompleteList.getElementsByTagName('li').length - 1;
-    if (e.which === 40) {
-      index++;
-      console.log(index);
-      if (liSelected) {
-        removeClass(liSelected, 'selected');
-        var next = autocompleteList.getElementsByTagName('li')[index];
-        if (typeof next !== undefined && index <= len) {
+function autoComplete() {
 
-        liSelected = next;
-      } else {
-        index = 0;
-        liSelected = autocompleteList.getElementsByTagName('li')[0];
-      }
-      addClass(liSelected, 'selected');
-      console.log(index);
-      } else {
-        index = 0;
+  const countryList = getCountryList();
+  autocompleteList.innerHTML = "";
+  autocompleteList.style.display = "block";
+  const inputValue = input.value.trim().toLowerCase();
 
-        liSelected = autocompleteList.getElementsByTagName('li')[0];
-        addClass(liSelected, 'selected');
-      }
-      input.value = liSelected.innerHTML;
-    } else if (e.which === 38) {
-      if (liSelected) {
-        removeClass(liSelected, 'selected');
-        index--;
-        next = autocompleteList.getElementsByTagName('li')[index];
-        if (typeof next !== undefined && index >= 0) {
-        liSelected = next;
-        } else {
-        index = len;
-        liSelected = autocompleteList.getElementsByTagName('li')[len];
-        } 
-        addClass(liSelected, 'selected');
-      } else {
-        index = 0;
-        liSelected = autocompleteList.getElementsByTagName('li')[len];
-        addClass(liSelected, 'selected');
-      }
-      input.value = liSelected.innerHTML;
-    }
-  }
-  console.log(liSelected.innerHTML);
-  
-  
-}, false);
-
-function removeClass(el, className) {
-  if (el.classList) {
-    el.classList.remove(className);
+  if(inputValue.length === 0) {
+    autocompleteList.style.display = "none";
   } else {
-    el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-  }
-};
-
-function addClass(el, className) {
-  if (el.classList) {
-    el.classList.add(className);
-  } else {
-    el.className += ' ' + className;
-  }
-};
-
-
-function autoComplete(e) {
-
-    const countryList = getCountryList();
-    autocompleteList.innerHTML = "";
-    autocompleteList.style.display = "block";
-    const inputValue = input.value.trim().toLowerCase();
-
-    if(inputValue.length === 0) {
-      autocompleteList.style.display = "none";
-    } else {
-      const autocompleteArray = countryListArray.filter((country) => country.name.common.toLowerCase().startsWith(inputValue));
+    const autocompleteArray = countryListArray.filter((country) => country.name.common.toLowerCase().startsWith(inputValue));
     
-      autocompleteArray.forEach(function(country) {
+    autocompleteArray.forEach(function(country) {
       
-        const found = countryList.find((name) => country.name.common === name.name);
+      const found = countryList.find((name) => country.name.common === name.name);
 
-        if (!found) {
-          autocompleteList.innerHTML += `
+      if (!found) {
+        autocompleteList.innerHTML += `
                                         <li class="autocomplete-list__country">${country.name.common}</li>
                                       `
-        }
-      })
-    }
+      }
+    })
+  }
 }
 
 
@@ -149,10 +80,11 @@ function addToList() {
 
 input.addEventListener("keyup", function (e) {
   if (e.which !== 38 && e.which !== 40) {
-    console.log("hi");
     autoComplete();
   }
 });
+
+document.addEventListener("keydown", function() {arrowsUpDown(event, autocompleteList, input)});
 
 addButton.addEventListener("click", addToList);
 body.addEventListener("keydown", function (e) {
