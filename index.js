@@ -84,7 +84,7 @@ input.addEventListener("keyup", function (e) {
   }
 });
 
-document.addEventListener("keydown", function() {arrowsUpDown(event, autocompleteList, input)});
+document.addEventListener("keydown", function() {arrowsUpDown(event, autocompleteList, input)}, false);
 
 addButton.addEventListener("click", addToList);
 body.addEventListener("keydown", function (e) {
